@@ -56,12 +56,34 @@ def test_tone_check():
     assert bad.returncode != 0
 
 
+def test_source_audit():
+    rows = [
+        {"数据集名称": "江西公告", "source_url": "https://www.jxeea.cn/example.html"},
+        {"数据集名称": "第三方线索", "source_url": "https://example.com/mirror.html"},
+    ]
+    with tempfile.TemporaryDirectory() as td:
+        data = Path(td) / "sources.csv"
+        out = Path(td) / "audit.json"
+        write_csv(data, rows)
+        subprocess.run([
+            sys.executable,
+            str(ROOT / "source_audit.py"),
+            str(data),
+            "--out",
+            str(out),
+        ], check=True)
+        result = json.loads(out.read_text(encoding="utf-8"))
+    assert result[0]["source_level"] == "A0"
+    assert result[1]["source_level"] == "B"
+    assert "verification_status" in result[0]
+
+
 def main():
     test_rank_buckets()
     test_tone_check()
+    test_source_audit()
     print("selfcheck OK")
 
 
 if __name__ == "__main__":
     main()
-

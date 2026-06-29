@@ -15,6 +15,7 @@ data/
       选科要求_专业组.csv
       选科要求_专业类.csv
       专业目录.csv
+      数据来源审计.csv
   院校信息.csv
   employment/
     红黄绿牌专业.csv
@@ -51,6 +52,8 @@ data/
 - `分数`
 - `累计人数`
 - `source_url`
+- `source_level`
+- `verification_status`
 - `发布机构`
 - `fetched_at`
 
@@ -72,6 +75,10 @@ data/
 - `source_url`
 - `公告页URL`
 - `发布机构`
+- `source_level`
+- `official_url`
+- `verification_status`
+- `last_verified_at`
 - `fetched_at`
 
 江西新高考专业组可能逐年重组。分档基准优先使用最新可得年；跨年区间只作为波动参考，不要把不同年份组号机械视为同一专业集合。
@@ -89,6 +96,8 @@ data/
 - `计划数`
 - `year`
 - `source_url`
+- `source_level`
+- `verification_status`
 
 计划变化只作方向性提示。组号不稳定时，不要比较跨年组计划数。
 
@@ -107,6 +116,8 @@ data/
 - `再选可选`
 - `要求原文`
 - `source_url`
+- `source_level`
+- `verification_status`
 
 ## 选科要求_专业类.csv
 
@@ -123,6 +134,8 @@ data/
 - `再选可选`
 - `含专业`
 - `source_url`
+- `source_level`
+- `verification_status`
 
 ## 专业目录.csv
 
@@ -144,6 +157,8 @@ data/
 - `体检要求`
 - `备注`
 - `source_url`
+- `source_level`
+- `verification_status`
 
 ## 院校信息.csv
 
@@ -157,6 +172,29 @@ data/
 - `办学性质`
 - `主管部门`
 - `source_url`
+- `source_level`
+- `verification_status`
+
+## 数据来源审计.csv
+
+联网检索、网页爬取、第三方转载验证或使用本地缓存时写入此表。字段：
+
+- `数据集名称`：如 `2024本科艺术类舞蹈类投档表`。
+- `year`
+- `批次`
+- `科类`
+- `source_level`：A0/A1/B/C，见 `source-verification.md`。
+- `source_url`：实际取数 URL。
+- `official_url`：可回溯官方 URL；没有则留空。
+- `retrieved_url`：搜索命中的网页或下载 URL。
+- `verification_status`：已官方核验、已交叉验证、待登录核验、不可验证。
+- `verification_method`：站内检索、官方附件、院校章程、跨源比对、本地缓存等。
+- `fetched_at`
+- `last_verified_at`
+- `cache_path`
+- `sha256`
+- `检索词`
+- `备注`
 
 ## 输出必须保留的来源字段
 
@@ -167,4 +205,6 @@ data/
 - `选科来源`
 - `专业目录来源`
 - `章程来源`
-
+- `source_level`
+- `verification_status`
+- `official_url`
